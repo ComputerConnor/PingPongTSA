@@ -5,7 +5,7 @@ using UnityEngine;
 public class AI : MonoBehaviour
 {
 
-    public float speed = 6.0F;
+    public float speed = 3.0F;
     float force = 6;
     Animator animator;
     public Transform Ball;
@@ -33,6 +33,7 @@ public class AI : MonoBehaviour
     {
         targetPosition.x = Ball.position.x;
         targetPosition.z = Ball.position.z;
+        targetPosition.y = Ball.position.y;
         transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
     }
 
@@ -47,20 +48,8 @@ public class AI : MonoBehaviour
         if (other.CompareTag("Ball"))
         {
             Vector3 dir = PickTarget() - transform.position;
-            other.GetComponent<Rigidbody>().velocity = dir.normalized *  force + new Vector3(0, Random.Range(3.0f,4.0f), 0);
-            if (AIScaling.position.z <= -0.2)
-            {
-
-                animator.Play("backhand");
-
-            }
-
-            if (AIScaling.position.z >= -0.2)
-            {
-
-                animator.Play("forehand");
-
-            }
+            other.GetComponent<Rigidbody>().velocity = dir.normalized *  force + new Vector3(0, Random.Range(3.2f,3.7f), 0);
+            Ball.GetComponent<ball>().hitter = "bot";
         }
     }
 }
